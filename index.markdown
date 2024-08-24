@@ -10,6 +10,6 @@ Here you can find some resources I prepared and used for my lessons.
 <ul>
   <li>Economics I - 2024</li>
   <ol>
-    <li><a href="/market-forces">Market forces: Demand and Supply</a></li>
+    <li><a href="market-forces">Market forces: Demand and Supply</a></li>
   </ol>
 </ul>
