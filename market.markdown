@@ -11,43 +11,49 @@ permalink: /market-forces/
 
 schema: EconSchema
 params:
-  - name: dx
-    value: 10
-    min: -10
-    max: 20
-    round: 0.01
-  - name: dy
-    value: 10
-    min: -10
-    max: 20
-    round: 0.01
-calcs:
-  db: "-params.dx/params.dy"
+- name: demandShift
+  value: 0,
+  min: -2
+  max: 2
+  round: 0.1
+- name: demandRotation
+  value: 0
+  min: -1
+  max: 1
+  round: 0.1
+- name: supplyShift
+  value: 0
+  min: -2
+  max: 2
+  round: 0.1
+- name: supplyRotation
+  value: 0
+  min: -1
+  max: 1
+  round: 0.1
 layout:
   OneGraph:
     graph:
       objects:
       - EconLinearEquilibrium:
+          name: ourEquilibrium
           demand:
             name: ourDemand
-            xIntercept: params.dx
-            invSlope: calcs.db
+            xIntercept: 8 + params.demandShift
+            invSlope: -1 + params.demandRotation
+            drag:
+            - horizontal: demandShift
+            - vertical: demandRotation
           supply:
             name: ourSupply
-            yIntercept: 1
-            slope: 1
+            yIntercept: 1 - params.supplyShift
+            slope: 1 + params.supplyRotation
+            drag:
+              - horizontal: supplyShift
+              - vertical: supplyRotation
           equilibrium:
             droplines:
-              vertical: Q_0
-              horizontal: P_0
-      - Point:
-          coordinates: [params.dx, 0]
-          drag:
-            - horizontal: dx
-      - Point:
-          coordinates: [0, params.dy]
-          drag:
-            - vertical: dy
-
+              vertical: "`Q_0 = ${calcs.ourEquilibrium.Q.toFixed(2)}`"
+              horizontal: "`P_0 = ${calcs.ourEquilibrium.P.toFixed(2)}`"
 
 </div>
